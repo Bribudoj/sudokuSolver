@@ -55,6 +55,9 @@ void valoresAusentesGrupo(int jogo[][TAMANHO], int grp, int resultado[],
       n++;
     }
   }
+  for(int p=0;p<tam;p++){
+        printf("%d",resultado[p]);
+    }
 }
 
 int main() {

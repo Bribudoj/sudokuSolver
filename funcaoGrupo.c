@@ -26,7 +26,18 @@ void showMat(int mat[][TAMANHO], int tam) {
 int main(void) {
   int i, j, k, m, n, z, pos_lin=0, pos_col=0, lin, col, grupo, tam = 9,
       resultado[TAMANHO][TAMANHO] = {0}, n_existe,
-      jogo[9][9] = {0};
+      jogo[9][9] =
+    {
+        {9, 4, 0, 1, 0, 2, 0, 5, 8},
+        {6, 0, 0, 0, 5, 0, 0, 0, 4},
+        {0, 0, 2, 4, 0, 3, 1, 0, 0},
+        {0, 2, 0, 0, 0, 0, 0, 6, 0},
+        {5, 0, 8, 0, 2, 0, 4, 0, 1},
+        {0, 6, 0, 0, 0, 0, 0, 8, 0},
+        {0, 0, 1, 6, 0, 8, 7, 0, 0},
+        {7, 0, 0, 0, 4, 0, 0, 0, 3},
+        {4, 3, 0, 5, 0, 9, 0, 1, 2}
+    };
 
   for (i = 0; i < tam; i++) {
     for (j = 0; j < tam; j++) {

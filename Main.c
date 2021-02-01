@@ -8,7 +8,7 @@
 
 #define TAMANHO 9
 //-------------------------------------------------------------------
-//   Prot�tipo das fun��es - isso permite que elas sejam colocados
+//   Prototipo das funcoes - isso permite que elas sejam colocados
 // dentro do arquivo C, em qualquer ordem.
 //
 void inicializaVetor(int v[], int tam);
@@ -87,24 +87,23 @@ void valoresAusentesGrupo(int jogo[][TAMANHO], int grp, int resultado[],
             n++;
         }
     }
+
 }
 void valoresPossiveisCelula(int resultado[], int linha[], int coluna[],
-                            int grupo[], int tam)
-{
+                            int grupo[], int tam){
     int k, aux[9], possibilidades = 0;
     inicializaVetor(aux, tam);
     interseccao2Vetores(linha, coluna, aux, tam);
     interseccao2Vetores(aux, grupo, resultado, tam);
 }
+
 void valoresNaoPodemCelula(int resultado[], int linha[], int coluna[],
-                           int grupo[], int tam)
-{
-    int i;
-    valoresPossiveisCelula(resultado,linha,coluna,grupo,tam);
+                           int grupo[], int tam){
+    int aux[9]={1,2,3,4,5,6,7,8,9};
+
 }
 
-int numPossibilidades(int resultado[],int linha[], int coluna[], int grupo[], int tam)
-{
+int numPossibilidades(int resultado[],int linha[], int coluna[], int grupo[], int tam){
     int k, possibilidades = 0;
     valoresPossiveisCelula(resultado, linha, coluna, grupo, tam);
     for (k = 0; k < tam; k++)
@@ -139,7 +138,7 @@ int resolvePuzzle(int solucao[][TAMANHO], int tam)
                     valoresAusentesLinha(solucao, i, linha, tam);
                     valoresAusentesColuna(solucao, j, coluna, tam);
                     // grupo (vejam a planilha no moodle)
-                    k = ((int)(i / 3)) * 3 + ((int)(j / 3)) + 1;
+                    k = ((int)(i / 3)) * 3 + ((int)(j / 3));
                     valoresAusentesGrupo(solucao, k, grupo, tam);
                     //
                     possib = numPossibilidades(valoresPossiveis, linha,
@@ -149,7 +148,7 @@ int resolvePuzzle(int solucao[][TAMANHO], int tam)
                         solucao[i][j] = valoresPossiveis[0]; // Observar que e esperado que
                         // o valor venha na 1a posicao
                         //
-                        // esse tipo de quebra do fluxo de execucaoo deve ser usado com
+                        // esse tipo de quebra do fluxo de execucao deve ser usado com
                         // cautela.
                         recomecar = 1;
                         break;
@@ -160,17 +159,16 @@ int resolvePuzzle(int solucao[][TAMANHO], int tam)
 
                     }
                 }
-            }
-            else
-            {
-                possibilidades[i][j] = 0;
-            }
 
+                else
+                {
+                    possibilidades[i][j] = 0;
+                }
+
+            }
         }
-
-
     }
-    while (1);
+    while (temLacuna);
 }
 
 int main()
@@ -187,24 +185,24 @@ int main()
         {7, 0, 0, 0, 4, 0, 0, 0, 3},
         {4, 3, 0, 5, 0, 9, 0, 1, 2}
     };
-    int sudoku[9][9];
+    int solucao[9][9];
     int linha[9], coluna[9], grupo[9], i, j;
 
     // copia os valores de jogoInicial para solucao
-    memcpy(sudoku, jogoInicial, sizeof(int) * 81);
+    memcpy(solucao, jogoInicial, sizeof(int) * 81);
 
     printf("Configuracao inicial do jogo:\n");
-    showMat(sudoku, 9);
+    showMat(solucao, 9);
     //
     // chama a funcao que resolve o problema
-    resolvePuzzle(sudoku, 9);
-    showMat(sudoku, 9);
+    resolvePuzzle(solucao, 9);
+    showMat(solucao, 9);
 
     return 0;
 }
 
 //-------------------------------------------------------------------
-// fun��es auxiliares
+// funcoes auxiliares
 void inicializaVetor(int v[], int tam)
 {
     int i;
@@ -257,13 +255,17 @@ void interseccao2Vetores(int v1[], int v2[], int resultado[], int tam)
     int i, j, k = 0;
     for (i = 0; i < tam; i++)
     {
-        for (j = 0; j < tam; j++)
+        if(v1[i]!=0)
         {
-            if (v1[i] == v2[j] && v1[i] != 0)
+            for (j = 0; j < tam; j++)
             {
-                resultado[k] = v1[i];
-                k++;
+                if (v1[i] == v2[j])
+                {
+                    resultado[k] = v1[i];
+                    k++;
+                }
             }
         }
     }
 }
+
