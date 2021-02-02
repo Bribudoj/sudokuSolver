@@ -91,17 +91,36 @@ void valoresAusentesGrupo(int jogo[][TAMANHO], int grp, int resultado[],
 }
 void valoresPossiveisCelula(int resultado[], int linha[], int coluna[],
                             int grupo[], int tam){
-    int k, aux[9], possibilidades = 0;
+    int k, aux[9],o;
     inicializaVetor(aux, tam);
     interseccao2Vetores(linha, coluna, aux, tam);
     interseccao2Vetores(aux, grupo, resultado, tam);
+
 }
 
 void valoresNaoPodemCelula(int resultado[], int linha[], int coluna[],
                            int grupo[], int tam){
-    int aux[9]={1,2,3,4,5,6,7,8,9};
+    int i,j,k,ii=0,o,aux[9]={1,2,3,4,5,6,7,8,9},valoresPossiveis[9];
+    inicializaVetor(valoresPossiveis, tam);
+    valoresPossiveisCelula(valoresPossiveis,linha,coluna,grupo,tam);
+    for(i=0;i<tam;i++){
+        for(j=0;j<tam;j++){
+            if(aux[i]== valoresPossiveis[j]){
+                aux[i]=0;
+                break;
+        }
+        }
+    }
+    for(k=0;k<tam;k++){
+        if(aux[k]!=0){
+            resultado[ii]=aux[k];
+            ii++;
+        }
 
-}
+
+    }
+                           }
+
 
 int numPossibilidades(int resultado[],int linha[], int coluna[], int grupo[], int tam){
     int k, possibilidades = 0;
@@ -142,7 +161,7 @@ int resolvePuzzle(int solucao[][TAMANHO], int tam)
                     valoresAusentesGrupo(solucao, k, grupo, tam);
                     //
                     possib = numPossibilidades(valoresPossiveis, linha,
-                                               coluna, grupo, tam);
+                                            coluna, grupo, tam);
                     if (possib == 1)
                     {
                         solucao[i][j] = valoresPossiveis[0]; // Observar que e esperado que
