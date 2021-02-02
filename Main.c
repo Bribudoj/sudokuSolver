@@ -18,6 +18,8 @@ void showVet(int vetor[], int tam);
 void interseccao2Vetores(int v1[], int v2[], int resultado[], int tam);
 
 // funcoes principais
+
+//Encontra os valores que ainda não foram preenchidos na linha
 void valoresAusentesLinha(int jogo[][TAMANHO], int lin, int resultado[],
                           int tam)
 {
@@ -40,6 +42,8 @@ void valoresAusentesLinha(int jogo[][TAMANHO], int lin, int resultado[],
         }
     }
 }
+
+//Encontra os valores que ainda não foram preenchidos na coluna
 void valoresAusentesColuna(int jogo[][TAMANHO], int col, int resultado[],
                            int tam)
 {
@@ -62,6 +66,7 @@ void valoresAusentesColuna(int jogo[][TAMANHO], int col, int resultado[],
         }
     }
 }
+//Encontra os valores que ainda não foram preenchidos no grupo
 void valoresAusentesGrupo(int jogo[][TAMANHO], int grp, int resultado[],
                           int tam)
 {
@@ -89,8 +94,12 @@ void valoresAusentesGrupo(int jogo[][TAMANHO], int grp, int resultado[],
     }
 
 }
+
+//Encontra os valores possiveis para a celula comparando os 3 vetores de valores nao preenchidos
+//na linha, coluna e grupo a que ela pertence
 void valoresPossiveisCelula(int resultado[], int linha[], int coluna[],
-                            int grupo[], int tam){
+                            int grupo[], int tam)
+{
     int k, aux[9],o;
     inicializaVetor(aux, tam);
     interseccao2Vetores(linha, coluna, aux, tam);
@@ -98,31 +107,40 @@ void valoresPossiveisCelula(int resultado[], int linha[], int coluna[],
 
 }
 
+//Encontra os valores nao permitidos para a celula comparando os valores possiveis
+//com um vetor que consta a sequencia de 1-9
 void valoresNaoPodemCelula(int resultado[], int linha[], int coluna[],
-                           int grupo[], int tam){
-    int i,j,k,ii=0,o,aux[9]={1,2,3,4,5,6,7,8,9},valoresPossiveis[9];
+                           int grupo[], int tam)
+{
+    int i,j,k,ii=0,o,aux[9]= {1,2,3,4,5,6,7,8,9},valoresPossiveis[9];
     inicializaVetor(valoresPossiveis, tam);
     valoresPossiveisCelula(valoresPossiveis,linha,coluna,grupo,tam);
-    for(i=0;i<tam;i++){
-        for(j=0;j<tam;j++){
-            if(aux[i]== valoresPossiveis[j]){
+    for(i=0; i<tam; i++)
+    {
+        for(j=0; j<tam; j++)
+        {
+            if(aux[i]== valoresPossiveis[j])
+            {
                 aux[i]=0;
                 break;
-        }
+            }
         }
     }
-    for(k=0;k<tam;k++){
-        if(aux[k]!=0){
+    for(k=0; k<tam; k++)
+    {
+        if(aux[k]!=0)
+        {
             resultado[ii]=aux[k];
             ii++;
         }
 
 
     }
-                           }
+}
 
-
-int numPossibilidades(int resultado[],int linha[], int coluna[], int grupo[], int tam){
+//Calcula o numero de valores possiveis para celula em retorno um inteiro com esse valor
+int numPossibilidades(int resultado[],int linha[], int coluna[], int grupo[], int tam)
+{
     int k, possibilidades = 0;
     valoresPossiveisCelula(resultado, linha, coluna, grupo, tam);
     for (k = 0; k < tam; k++)
@@ -134,6 +152,9 @@ int numPossibilidades(int resultado[],int linha[], int coluna[], int grupo[], in
     }
     return possibilidades;
 }
+//Funcao principal para solucao do problema, chama todas as outras funcoes
+//no momento e capaz de solucionar o problema proposto, porem nao implementei
+//a recursividade para solucionar problemas mais complexos
 int resolvePuzzle(int solucao[][TAMANHO], int tam)
 {
     int possibilidades[TAMANHO][TAMANHO];
@@ -161,7 +182,7 @@ int resolvePuzzle(int solucao[][TAMANHO], int tam)
                     valoresAusentesGrupo(solucao, k, grupo, tam);
                     //
                     possib = numPossibilidades(valoresPossiveis, linha,
-                                            coluna, grupo, tam);
+                                               coluna, grupo, tam);
                     if (possib == 1)
                     {
                         solucao[i][j] = valoresPossiveis[0]; // Observar que e esperado que
