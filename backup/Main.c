@@ -1,7 +1,7 @@
 /*
  *  Trabalho 1 - Passos para resolver o sudoku
- *  Autor:
- *  Data:
+ *  Autor: Eduardo Mendes Santana
+ *  Data:  02/02/2021
  */
 #include <stdio.h>
 #include <string.h>
@@ -160,16 +160,13 @@ int resolvePuzzle(int solucao[][TAMANHO], int tam)
     int possibilidades[TAMANHO][TAMANHO];
     int linha[TAMANHO], coluna[TAMANHO], grupo[TAMANHO],
         valoresPossiveis[TAMANHO];
-    int i, j, k,m,recur, possib;
+    int i, j, k, possib;
     char recomecar = 0, temLacuna = 0;
     do
     {
         recomecar = 0, temLacuna = 0;
         for (i = 0; i < tam; i++)
         {
-            if(recomecar==1){
-                break;
-            }
             for (j = 0; j < tam; j++)
             {
                 if (solucao[i][j] == 0)
@@ -196,22 +193,11 @@ int resolvePuzzle(int solucao[][TAMANHO], int tam)
                         recomecar = 1;
                         break;
                     }
-                    else //if(possib>1)
+                    else
                     {
                         possibilidades[i][j] = possib;
-                        for(m=0;m<possib;m++){
-                            solucao[i][j]=valoresPossiveis[m];
-                            //showMat(solucao,tam);
-                            recur=resolvePuzzle(solucao,tam);
-                            if(recur==0){
-                                continue;
-                            }
-                        }
 
                     }
-                    //else{
-                    //    return 0;
-                    //}
                 }
 
                 else
@@ -222,7 +208,7 @@ int resolvePuzzle(int solucao[][TAMANHO], int tam)
             }
         }
     }
-    while (1);
+    while (temLacuna);
 }
 
 int main()
